@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geolocation Practice</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="consentBanner" class="banner">
+      <p>This site wants to access your location for practice.</p>
+      <button id="consentAllow">Allow</button>
+      <button id="consentDeny">Deny</button>
+    </div>
+
+    <h2>Status</h2>
+    <pre id="status"></pre>
+
+    <h2>Coordinates</h2>
+    <pre id="coords"></pre>
+
+    <div id="mapLinkContainer"></div>
+
+    <h2>Last Payload Sent</h2>
+    <pre id="lastPayload"></pre>
+
+    <script src="script.js"></script>
+  </body>
+</html>
