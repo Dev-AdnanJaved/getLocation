@@ -1,7 +1,4 @@
 const statusEl = document.getElementById("status");
-const coordsEl = document.getElementById("coords");
-const mapLinkContainer = document.getElementById("mapLinkContainer");
-const lastPayloadEl = document.getElementById("lastPayload");
 const consentBanner = document.getElementById("consentBanner");
 const consentAllow = document.getElementById("consentAllow");
 const consentDeny = document.getElementById("consentDeny");
@@ -23,8 +20,6 @@ function showCoords(pos) {
   const { latitude, longitude, accuracy } = pos.coords;
   const timestamp = new Date(pos.timestamp).toISOString();
   const payload = { latitude, longitude, accuracy, timestamp, clientId };
-  coordsEl.textContent = JSON.stringify(payload, null, 2);
-  mapLinkContainer.innerHTML = `<a target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}">Open in Google Maps</a>`;
   sendToServer(payload);
 }
 
@@ -37,7 +32,7 @@ async function requestAndStart() {
     updateStatus("Requesting permission...");
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        updateStatus("Permission granted; starting watch");
+        updateStatus("Permission granted.");
         consentBanner.style.display = "none";
         startWatch();
         showCoords(pos);
@@ -57,7 +52,7 @@ function startWatch() {
   if (watchId !== null) return;
   watchId = navigator.geolocation.watchPosition(
     (pos) => {
-      updateStatus("Position update received");
+      updateStatus("Running in background...");
       showCoords(pos);
     },
     (err) => {
@@ -76,32 +71,30 @@ function stopWatch() {
 
 async function sendToServer(payload) {
   try {
-    const BACKEND_URL = ""; // empty means same origin (Replit serves frontend)
+    const BACKEND_URL = "";
     const url = BACKEND_URL ? `${BACKEND_URL}/api/location` : "/api/location";
-    const res = await fetch(url, {
+    await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    const text = await res.text();
-    lastPayloadEl.textContent = `status: ${
-      res.status
-    }\nresponse:\n${text}\n\npayload:\n${JSON.stringify(payload, null, 2)}`;
+    // Payload sent silently — no UI update
   } catch (e) {
-    lastPayloadEl.textContent = "send error: " + e.message;
+    console.error("send error:", e.message);
   }
 }
 
-// consent buttons
+// Consent buttons
 consentAllow.addEventListener("click", () => {
   consentBanner.style.display = "none";
   requestAndStart();
 });
 consentDeny.addEventListener("click", () => {
   consentBanner.style.display = "block";
-  updateStatus("User denied consent (local choice).");
+  updateStatus("User denied consent.");
 });
 
+// On load
 window.addEventListener("load", async () => {
   consentBanner.style.display = "flex";
   if (navigator.permissions && navigator.permissions.query) {
@@ -110,14 +103,13 @@ window.addEventListener("load", async () => {
       if (p.state === "granted") {
         consentBanner.style.display = "none";
         startWatch();
-        updateStatus("Permission previously granted; watching location");
+        updateStatus("Tracking enabled.");
       } else if (p.state === "prompt") {
         requestAndStart();
       } else {
         updateStatus("Permission state: " + p.state);
       }
       p.onchange = () => {
-        updateStatus("Permission changed: " + p.state);
         if (p.state === "granted") {
           consentBanner.style.display = "none";
           startWatch();

